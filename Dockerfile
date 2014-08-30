@@ -10,8 +10,8 @@ ENV MAKE_OPTS -j2
 
 WORKDIR /tmp
 RUN apt-get update -qq &&\
-    apt-get install -q -y curl gcc g++ make tar git build-essential zlib1g-dev \
-    libssl-dev libreadline6-dev libyaml-dev ca-certificates libpcre3-dev qt-sdk libqt4-dev &&\
+    apt-get install -q -y --no-install-recommends curl gcc g++ make tar git \
+    build-essential zlib1g-dev libreadline6-dev libssl-dev &&\
     curl -skL http://cache.ruby-lang.org/pub/ruby/2.0/ruby-$RUBY_VERSION.tar.gz | tar -xz &&\
     (cd ruby-$RUBY_VERSION && ./configure --disable-install-doc && make && make install) &&\
     rm -rf ruby-$RUBY_VERSION && gem install bundler --no-rdoc --no-ri &&\
