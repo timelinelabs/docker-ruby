@@ -1,6 +1,8 @@
 require 'net/http'
 
 class WordCount
+  attr_accessor :resp
+
   def initialize url
     @uri ||= URI(url)
   end
@@ -8,17 +10,18 @@ class WordCount
   def get
     begin
       @resp = Net::HTTP.get_response(@uri)
-    rescue
+    rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
+       Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
       @resp = nil
     end
     self
   end
 
   def success
-    begin
-      return true if @resp.value
-    rescue
-      return false
+    if @resp.nil? or @resp.code.to_i != 200
+      false
+    else
+      true
     end
   end
 
@@ -28,7 +31,7 @@ class WordCount
 
   def wc w
     return 0 if @resp == nil
-    words = @resp.gsub(/\s+/, ' ').strip.split(' ')
+    words = @resp.body.gsub(/\s+/, ' ').strip.split(' ')
     words.count w
   end
 end
