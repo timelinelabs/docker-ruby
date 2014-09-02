@@ -17,7 +17,7 @@ RUN apt-get update -qq &&\
     (cd ruby-$RUBY_VERSION && ./configure --disable-install-doc && make && make install) &&\
     rm -rf ruby-$RUBY_VERSION && gem install bundler --no-rdoc --no-ri &&\
     echo 'gem: --no-document' > /etc/gemrc && echo 'gem: --no-document' > /.gemrc &&\
-    apt-get remove -y gcc g++ make build-essential zlib1g-dev libreadline6-dev libssl-dev &&\
+    apt-get remove -y build-essential zlib1g-dev libreadline6-dev libssl-dev &&\
     apt-get autoremove -y && apt-get autoclean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD test/ /tmp/test
