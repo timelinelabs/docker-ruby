@@ -18,7 +18,7 @@ RUN apt-get update -qq &&\
     echo 'gem: --no-document' > /etc/gemrc && echo 'gem: --no-document' > ~/.gemrc &&\
     apt-get purge -y build-essential &&\
     apt-get autoremove -y && apt-get autoclean -y &&\
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/rubybuild
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD test/ /tmp/test
 RUN ruby test/tc_word_count.rb && rm -rf test
