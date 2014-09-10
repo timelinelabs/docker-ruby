@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER Albert Dixon <albert@timelinelabs.com>
 
-ENV RUBY_VERSION 1.9.3-p547
+ENV RUBY_VERSION 2.1.2
 ENV RUBY_HOME    /usr/local/ruby
 ENV PATH         $RUBY_HOME/bin:/usr/local/bin:$PATH
 
