@@ -1,8 +1,14 @@
 # Docker - Ruby
 
-A minimal ubuntu based [Docker](http://www.docker.com) container with [Ruby](http://www.ruby-lang.org) and [Bundler](http://bundler.io) installed.
+A minimal debian based [Docker](http://www.docker.com) container with [Ruby](http://www.ruby-lang.org) and [Bundler](http://bundler.io) installed.
 
 Version tags are based off the installed [Ruby](http://www.ruby-lang.org) version
+
+## Reasoning
+
+Before the official [language stacks](http://blog.docker.com/2014/09/docker-hub-official-repos-announcing-language-stacks/) most 'language' images
+just had too much junk in them. I wanted something small(ish) and basic. The language stacks are *awesome*, no doubt, however I found that we still
+needed to install a bunch of things for our gems and I wanted to use arbitrary Ruby versions. So, there you have it.
 
 ## Usage
 
