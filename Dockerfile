@@ -1,4 +1,4 @@
-FROM debian:wheezy
+FROM ubuntu:14.04
 MAINTAINER Albert Dixon <albert@timelinelabs.com>
 
 ENV RUBY_VERSION 2.0.0-p481
