@@ -1,7 +1,7 @@
 FROM debian:jessie
 MAINTAINER Albert Dixon <albert@timelinelabs.com>
 
-ENV RUBY_VERSION 2.0.0-p481
+ENV RUBY_VERSION 2.0.0-p353
 ENV RUBY_HOME    /usr/local/ruby
 ENV PATH         $RUBY_HOME/bin:/usr/local/bin:$PATH
 
