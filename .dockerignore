@@ -2,3 +2,4 @@
 .ruby-version
 README*
 Makefile
+circle.yml
