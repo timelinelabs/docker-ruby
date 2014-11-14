@@ -1,5 +1,7 @@
 # Docker - Ruby
 
+[![Docker Repository on Quay.io](https://quay.io/repository/timeline_labs/ruby/status "Docker Repository on Quay.io")](https://quay.io/repository/timeline_labs/ruby)
+
 A minimal debian based [Docker](http://www.docker.com) container with [Ruby](http://www.ruby-lang.org) and [Bundler](http://bundler.io) installed.
 
 Version tags are based off the installed [Ruby](http://www.ruby-lang.org) version
