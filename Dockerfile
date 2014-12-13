@@ -3,7 +3,6 @@ MAINTAINER Albert Dixon <albert@timelinelabs.com>
 
 ENV RUBY_VERSION 2.0.0-p353
 ENV RUBY_HOME    /usr/local/ruby
-ENV PATH         $RUBY_HOME/bin:/usr/local/bin:$PATH
 
 ENV DEBIAN_FRONTEND   noninteractive
 ENV CONFIGURE_OPTS    --disable-install-doc
@@ -28,3 +27,8 @@ ENV LC_ALL C.UTF-8
 
 ADD test/ /tmp/test
 RUN ruby test/tc_word_count.rb && rm -rf test
+
+ENV GEM_HOME    $(gem environment gemdir)
+ENV GEM_PATH    $(gem environment gempath)
+ENV GEM_CACHE   $GEM_HOME/cache
+ENV PATH        $RUBY_HOME/bin:$GEM_HOME/bin:/usr/local/bin:$PATH
