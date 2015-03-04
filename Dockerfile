@@ -21,6 +21,8 @@ RUN apt-get update &&\
     git clone https://github.com/sstephenson/ruby-build.git &&\
     PREFIX=/tmp/rubybuild ./ruby-build/install.sh &&\
     PATH=/tmp/rubybuild/bin:$PATH ruby-build -v $RUBY_VERSION $RUBY_HOME &&\
+    apt-get purge -y --auto-remove $BUILD_DEPS &&\
+    apt-get autoremove -y && apt-get autoclean -y &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN dpkg-reconfigure locales && \
