@@ -1,22 +1,26 @@
-FROM debian:jessie
+FROM buildpack-deps:jessie
 MAINTAINER Albert Dixon <albert@timelinelabs.com>
 
 ENV RUBY_VERSION 2.0.0-p353
 ENV RUBY_HOME    /usr/local/ruby
 
-ENV DEBIAN_FRONTEND   noninteractive
-ENV CONFIGURE_OPTS    --disable-install-doc
+# Keep track of the build deps for later purging
+ENV BUILD_DEPS  autoconf build-essential libbz2-dev libcurl4-openssl-dev \
+                libevent-dev libffi-dev libglib2.0-dev libjpeg-dev \
+                libmagickcore-dev libmagickwand-dev libmysqlclient-dev \
+                libncurses-dev libpq-dev libreadline-dev libsqlite3-dev \
+                libssl-dev libxml2-dev libxslt-dev libyaml-dev zlib1g-dev
 
-WORKDIR /tmp
+ENV DEBIAN_FRONTEND noninteractive
+ENV CONFIGURE_OPTS --disable-install-doc
+
+# Use rbenv to install our ruby version
 RUN apt-get update &&\
-    apt-get install -y --no-install-recommends curl git ca-certificates build-essential libssl-dev \
-    libreadline6 libreadline6-dev libxml2-dev libyaml-dev locales &&\
+    apt-get install -y --no-install-recommends curl git ca-certificates locales &&\
+    cd /tmp &&\
     git clone https://github.com/sstephenson/ruby-build.git &&\
     PREFIX=/tmp/rubybuild ./ruby-build/install.sh &&\
-    PATH=/tmp/rubybuild/bin:$PATH ruby-build $RUBY_VERSION $RUBY_HOME &&\
-    gem install bundler --no-rdoc --no-ri &&\
-    echo 'gem: --no-document' >> /etc/gemrc && echo 'gem: --no-document' >> ~/.gemrc &&\
-    apt-get autoremove -y && apt-get autoclean -y &&\
+    PATH=/tmp/rubybuild/bin:$PATH ruby-build -v $RUBY_VERSION $RUBY_HOME &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN dpkg-reconfigure locales && \
@@ -25,10 +29,18 @@ RUN dpkg-reconfigure locales && \
 
 ENV LC_ALL C.UTF-8
 
-ADD test/ /tmp/test
-RUN ruby test/tc_word_count.rb && rm -rf test
+# skip installing gem documentation
+RUN echo 'gem: --no-rdoc --no-ri --no-document' >> /etc/gemrc &&\
+    echo 'gem: --no-rdoc --no-ri --no-document' >> /root/.gemrc
 
-ENV GEM_HOME    $(gem environment gemdir)
-ENV GEM_PATH    $(gem environment gempath)
-ENV GEM_CACHE   $GEM_HOME/cache
-ENV PATH        $RUBY_HOME/bin:$GEM_HOME/bin:/usr/local/bin:$PATH
+# install things globally, for great justice
+ENV GEM_HOME /usr/local/bundle
+ENV GEM_CACHE $GEM_HOME/cache
+ENV GEM_PATH $(gem environment gempath)
+ENV PATH $GEM_HOME/bin:$RUBY_HOME/bin:$PATH
+RUN gem install bundler \
+    && bundle config --global path "$GEM_HOME" \
+    && bundle config --global bin "$GEM_HOME/bin"
+
+# don't create ".bundle" in all our apps
+ENV BUNDLE_APP_CONFIG $GEM_HOME
