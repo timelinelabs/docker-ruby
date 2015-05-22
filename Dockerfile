@@ -30,8 +30,8 @@ RUN dpkg-reconfigure locales && \
 ENV LC_ALL C.UTF-8
 
 # skip installing gem documentation
-RUN echo 'gem: --no-rdoc --no-ri --no-document' >> /etc/gemrc &&\
-    echo 'gem: --no-rdoc --no-ri --no-document' >> /root/.gemrc
+RUN echo 'gem: -E -N --bin-dir /usr/local/bin --no-rdoc --no-ri --minimal-deps' >> /etc/gemrc &&\
+    echo 'gem: -E -N --bin-dir /usr/local/bin --no-rdoc --no-ri --minimal-deps' >> /root/.gemrc
 
 # install things globally, for great justice
 ENV GEM_HOME /usr/local/bundle
