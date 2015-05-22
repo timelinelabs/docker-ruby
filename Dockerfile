@@ -31,11 +31,11 @@ ENV LC_ALL C.UTF-8
 
 # skip installing gem documentation
 RUN echo ':verbose: true' >/etc/gemrc &&\
-    echo 'gem: -E -N --bin-dir /usr/local/bin --no-rdoc --no-ri --minimal-deps' >>/etc/gemrc &&\
-    echo 'install: -E -N --bin-dir /usr/local/bin --no-rdoc --no-ri --minimal-deps' >>/etc/gemrc &&\
+    echo 'gem: -E -N --no-rdoc --no-ri --minimal-deps' >>/etc/gemrc &&\
+    echo 'install: -E -N --no-rdoc --no-ri --minimal-deps' >>/etc/gemrc &&\
     echo ':verbose: true' >/root/.gemrc &&\
-    echo 'gem: -E -N --bin-dir /usr/local/bin --no-rdoc --no-ri --minimal-deps' >>/root/.gemrc &&\
-    echo 'install: -E -N --bin-dir /usr/local/bin --no-rdoc --no-ri --minimal-deps' >>/root/.gemrc
+    echo 'gem: -E -N --no-rdoc --no-ri --minimal-deps' >>/root/.gemrc &&\
+    echo 'install: -E -N --no-rdoc --no-ri --minimal-deps' >>/root/.gemrc
 
 # install things globally, for great justice
 ENV GEM_HOME /usr/local/bundle
