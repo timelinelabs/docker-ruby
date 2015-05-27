@@ -42,9 +42,10 @@ ENV GEM_HOME /usr/local/bundle
 ENV GEM_CACHE $GEM_HOME/cache
 ENV GEM_PATH $(gem environment gempath)
 ENV PATH $GEM_HOME/bin:$RUBY_HOME/bin:$PATH
-RUN gem install bundler \
-    && bundle config --global path "$GEM_HOME" \
-    && bundle config --global bin "$GEM_HOME/bin"
+RUN gem update --system &&\
+    gem install bundler &&\
+    bundle config --global path "$GEM_HOME" &&\
+    bundle config --global bin "$GEM_HOME/bin"
 
 # don't create ".bundle" in all our apps
 ENV BUNDLE_APP_CONFIG $GEM_HOME
