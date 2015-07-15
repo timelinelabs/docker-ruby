@@ -1,7 +1,7 @@
 FROM buildpack-deps:jessie
 MAINTAINER Albert Dixon <albert.dixon@schange.com>
 
-ENV RUBY_VERSION 2.0.0-p645
+ENV RUBY_VERSION 2.1.5
 ENV RUBY_HOME    /usr/local/ruby
 
 # Keep track of the build deps for later purging
